@@ -5,14 +5,11 @@ Uses [Selenium](http://www.seleniumhq.org/) for simulating a browser, so the PDF
 
 ## Installation
 
-### MAC OS X
+### Mac OS X, Windows 7, Ubuntu
 * Install Firefox via official Website
 * `pip install pyvirtualdisplay selenium`
 
-### Ubuntu / Raspberry Pi
-* `sudo pip install pyvirtualdisplay selenium`
-* `sudo apt-get update`
-* `sudo apt-get install python-pip iceweasel xvfb`
+Additional step for Raspberry Pi: `sudo apt-get install iceweasel xvfb`. If you don't have `pip` installed on Windows, see [here](http://stackoverflow.com/q/4750806).
 
 Copy the scripts to a folder, configure them as mentioned below and then run them each to check if they work on your system.
 
@@ -55,5 +52,4 @@ Also make sure to allow ["access for less secure apps"](https://www.google.com/s
 Use `crontab -e` to open crontab.
 
 Add entry with `0 7 * * * ~/path/to/your/script/skybriefing_dabs.sh`
-
 
