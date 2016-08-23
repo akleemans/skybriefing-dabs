@@ -39,6 +39,7 @@ In `send_email.py`, you'll have to configure sender and recipient email addresse
 Also make sure to allow ["access for less secure apps"](https://www.google.com/settings/security/lesssecureapps) to enable sending emails via script.
 
     SEND_TO = ['myemail1@gmail.com', 'myemail2@gmail.com']
+    PDFS = 1 # set to 2 if you used a login on other script
     PDF_PATH = 'my path' # Mac OS X: '~/temp/', or on Raspi: '/home/pi/temp/'
     SENDER_EMAIL = 'sender-email@gmail.com'
     SENDER_PW = 'gmail-password'
