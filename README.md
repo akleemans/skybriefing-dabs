@@ -44,6 +44,8 @@ Also make sure to allow ["access for less secure apps"](https://www.google.com/s
     SENDER_PW = 'gmail-password'
     EMAIL_SUBJECT = 'skybriefing.com report'
     EMAIL_BODY = 'Sent from Raspberry Pi :)'
+    
+*Important*: Make sure the directory matches where the files are downloaded and that is temporary! The script will delete *all* files in the directory to clean up!
 
 ### Make file executable
 `chmod +x skybriefing_dabs.sh`
