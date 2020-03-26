@@ -7,10 +7,13 @@ Uses [Selenium](http://www.seleniumhq.org/) for simulating a browser, so the PDF
 
 ### MAC OS X
 * Install Firefox via official Website
-* `pip install pyvirtualdisplay selenium`
+* Install Selenium: `pip install selenium`
+* Install Geckodriver: `brew install geckodriver`
+
+(Trust certificates: `pip --trusted-host pypi.org --trusted-host files.pythonhosted.org install pyvirtualdisplay selenium`)
 
 ### Ubuntu / Raspberry Pi
-* `sudo pip install pyvirtualdisplay selenium`
+* `pip install pyvirtualdisplay selenium==2.53.6`
 * `sudo apt-get update`
 * `sudo apt-get install python-pip iceweasel xvfb`
 

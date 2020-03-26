@@ -6,21 +6,30 @@ import time
 
 ### CONFIG START ###
 
-WITH_LOGIN = False # Use script with login? if True, fill out info below
 USER = 'my_login'
 PW = 'my_password'
+COUNTRY ='Switzerland'
 FLUGPLATZ = 'LSZH'
 LOWER_FL = '000'
 UPPER_FL = '120'
+LOG_FILE = 'log.txt'
 
 ### CONFIG END ###
 
-#set up a virtual display
-print 'Setting up virtual display and driver...'
+log_file = open(LOG_FILE, 'a')
+
+def log(msg):
+    """Logs message and writes it to logfile"""
+    print msg
+    log_file.write(msg + '\n')
+
+
+log('Starting...')
+log('Setting up virtual display and driver...')
 display = Display(visible=0, size=(800, 600))
 display.start()
 
-# set up firefox
+log('Setting up Firefox...')
 profile = webdriver.FirefoxProfile()
 profile.set_preference('browser.download.folderList', 2)
 profile.set_preference('browser.download.manager.showWhenStarting', False)
@@ -29,37 +38,32 @@ profile.set_preference('browser.helperApps.neverAsk.saveToDisk', ('application/p
 profile.set_preference('pdfjs.disabled', True)
 driver = webdriver.Firefox(profile)
 
-print 'Opening website...'
-driver.get("http://www.skybriefing.com/portal")
+log('Opening website...')
+driver.get("https://www.skybriefing.com")
 time.sleep(10)
-#driver.maximize_window()
 
 ## download DABS PDF
-print 'Downloading first PDF...'
-element = driver.find_elements_by_xpath('//*[@id="v-dabsportlet_WAR_ibsportletdabs_LAYOUT_10454"]/div/div[2]/div/div[4]/div/div/div/a')[0]
+log('Downloading first PDF...')
+element = driver.find_elements_by_css_selector('div[location="pdfLinkToday"] a')[0]
 element.click()
 time.sleep(10)
 
-if not WITH_LOGIN:
-    driver.quit()
-    print 'Done.'
-    quit()
-
-print 'Logging in...'
-driver.get("https://www.skybriefing.com/portal/de/web/guest/signinnativ")
-time.sleep(20)
-# username
-element = driver.find_elements_by_xpath('//*[@id="_58_login"]')[0]
+log('Logging in...')
+driver.get("https://www.skybriefing.com/de/signinnativ")
+time.sleep(40)
+log('Entering username...')
+element = driver.find_elements_by_xpath('//*[@id="_com_liferay_login_web_portlet_LoginPortlet_login"]')[0]
 element.send_keys(USER)
-time.sleep(2)
-#pw
-element = driver.find_elements_by_xpath('//*[@id="_58_password"]')[0]
+time.sleep(5)
+log('Entering password...')
+element = driver.find_elements_by_xpath('//*[@id="_com_liferay_login_web_portlet_LoginPortlet_password"]')[0]
 element.send_keys(PW)
-time.sleep(2)
+time.sleep(5)
 element.send_keys(Keys.ENTER)
 time.sleep(5)
-driver.get('https://www.skybriefing.com/portal/de/new-area-briefing')
-time.sleep(10)
+log('Open Area Briefing...')
+driver.get('https://www.skybriefing.com/de/new-area-briefing')
+time.sleep(30)
 
 # Information Area
 element = Select(driver.find_elements_by_css_selector('div.v-select:nth-child(1) > select:nth-child(1)')[0])
@@ -78,26 +82,25 @@ element.send_keys(LOWER_FL)
 time.sleep(2)
 
 # upper FL
-
 element = driver.find_elements_by_css_selector('#gwt-uid-15')[0]
 element.send_keys(UPPER_FL)
 time.sleep(2)
 
-print 'Entered flight information and pressed Enter, this could take a while...'
+log('Entered flight information and pressed Enter, this could take a while...')
 element.send_keys(Keys.ENTER)
-time.sleep(60)
+time.sleep(70)
 
-print 'Downloading generated PDF...'
-
+log('Downloading generated PDF...')
 element = driver.find_elements_by_css_selector('div.skb:nth-child(6) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > span:nth-child(1) > span:nth-child(2)')[0]
 element.click()
 time.sleep(20)
 
 # logging out
-print 'Logging out...'
-driver.get('https://www.skybriefing.com/portal/de/c/portal/logout')
+log('Logging out...')
+driver.get('https://www.skybriefing.com/c/portal/logout')
 time.sleep(10)
 
 # clean quit
 driver.quit()
-print 'All done!'
+log('All done!')
+log_file.close()
