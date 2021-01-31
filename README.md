@@ -9,3 +9,6 @@ The download of the PDF has been ported to Python 3 and can be run with:
 
     python3 get_pdfs.py
 
+The only dependency you'll need is `selenium`:
+
+    pip3 install selenium
